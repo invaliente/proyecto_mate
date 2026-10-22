@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario Final - Matemáticas</title>
+    <!-- Cargamos Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        /* --- ESTILOS GENERALES Y FONDO REUTILIZADOS --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: white;
+        }
+
+        .contenedor-pagina {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 160px 20px 40px 20px;
+        }
+
+        /* Capa 1: Imagen de fondo difuminada */
+        .contenedor-pagina::before {
+            content: "";
+            position: fixed; 
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('images/menu fondo.jpg'); 
+            background-size: cover;
+            background-position: center;
+            filter: blur(12px);
+            z-index: -2;
+        }
+
+        /* Capa 2: Filtro azul unificador */
+        .contenedor-pagina::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(29, 185, 224, 0.2), rgba(58, 134, 255, 0.25));
+            z-index: -1;
+        }
+
+        /* --- ENCABEZADO SUPERIOR FIJO --- */
+        .encabezado-linea {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 60px;
+            background-image: url('images/encabezado.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        /* TÍTULO DEL TEMA */
+        .titulo-tema {
+            width: 100%;
+            text-align: center; 
+            margin: 0 0 30px 0;
+            font-size: 36px; 
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        /* --- BOTÓN VOLVER --- */
+        .btn-volver {
+            position: fixed;
+            top: 85px; left: 20px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 1001;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-volver:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(-3px);
+        }
+
+        /* --- CONTENEDOR DE LAS TARJETAS --- */
+        .seccion-contenido {
+            width: 100%;
+            max-width: 850px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Tarjeta base estilo Glassmorphism idéntica a tus temas */
+        .tarjeta-cristal {
+            background-color: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 6px solid #1DB9E0; /* Borde celeste distintivo */
+        }
+
+        .tarjeta-cristal h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- ESTILOS EXCLUSIVOS PARA LAS OPCIONES --- */
+        .opciones-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        /* Cada opción se comporta de manera interactiva */
+        .opcion-label {
+            display: flex;
+            align-items: center;
+            background-color: rgba(15, 23, 42, 0.3);
+            padding: 14px 20px;
+            border-radius: 14px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+            font-size: 15px;
+        }
+        .opcion-label:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: #1DB9E0;
+        }
+
+        .opcion-label input[type="radio"] {
+            margin-right: 15px;
+            accent-color: #1DB9E0; /* Color celeste para el círculo de selección */
+            transform: scale(1.2);
+        }
+
+        /* --- BOTÓN DE ENVIAR EXAMEN --- */
+        .btn-enviar-quiz {
+            background: linear-gradient(135deg, #1DB9E0, #159ec0);
+            color: white;
+            border: none;
+            padding: 16px 35px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(29, 185, 224, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        .btn-enviar-quiz:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(29, 185, 224, 0.5);
+        }
+
+        /* Ajustes de pantalla móvil */
+        @media (max-width: 768px) {
+            .btn-volver { position: absolute; top: 75px; left: 50%; transform: translateX(-50%); }
+            .contenedor-pagina { padding-top: 190px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado superior fijo en imagen -->
+    <div class="encabezado-linea"></div>
+
+    <!-- Botón flotante para regresar de forma segura al menú -->
+    <a href="menu.html" class="btn-volver"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</a>
+
+    <!-- Bloque contenedor flexible -->
+    <div class="contenedor-pagina">
+        
+        <h1 class="titulo-tema">Cuestionario Final</h1>
+
+        <!-- Formulario que agrupa las 15 preguntas -->
+        <form id="quiz-form" class="seccion-contenido" onsubmit="evaluarCuestionario(event)">
+            
+            <!-- ================= TEMA 1: ECUACIÓN DE LA RECTA ================= -->
+            
+            <!-- Pregunta 1 -->
+            <div class="tarjeta-cristal">
+                <h2>1. ¿Cuál es la forma estándar de la ecuación pendiente-ordenada al origen?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p1" value="A"> Ax + By + C = 0</label>
+                    <label class="opcion-label"><input type="radio" name="p1" value="B"> y = mx + b</label>
+                    <label class="opcion-label"><input type="radio" name="p1" value="C"> (x - h)² + (y - k)² = r²</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="tarjeta-cristal">
+                <h2>2. En la ecuación y = 3x - 5, ¿cuál es el valor de la pendiente (m)?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p2" value="A"> 3</label>
+                    <label class="opcion-label"><input type="radio" name="p2" value="B"> -5</label>
+                    <label class="opcion-label"><input type="radio" name="p2" value="C"> 5</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="tarjeta-cristal">
+                <h2>3. ¿Qué representa la constante 'b' en la ecuación y = mx + b?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p3" value="A"> La pendiente de la recta</label>
+                    <label class="opcion-label"><input type="radio" name="p3" value="B"> El punto donde la recta cruza el eje X</label>
+                    <label class="opcion-label"><input type="radio" name="p3" value="C"> El punto donde la recta cruza el eje Y</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="tarjeta-cristal">
+                <h2>4. Si una recta es completamente horizontal, ¿cuánto vale su pendiente?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p4" value="A"> m = 0</label>
+                    <label class="opcion-label"><input type="radio" name="p4" value="B"> m = 1</label>
+                    <label class="opcion-label"><input type="radio" name="p4" value="C"> Es indefinida</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 5 -->
+            <div class="tarjeta-cristal">
+                <h2>5. ¿Cuál es la fórmula básica para calcular la pendiente (m) teniendo dos puntos?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p5" value="A"> m = (x₂ - x₁) / (y₂ - y₁)</label>
+                    <label class="opcion-label"><input type="radio" name="p5" value="B"> m = (y₂ - y₁) / (x₂ - x₁)</label>
+                    <label class="opcion-label"><input type="radio" name="p5" value="C"> m = y₂ + y₁ / x₂ + x₁</label>
+                </div>
+            </div>
+            <!-- ================= TEMA 2: ECUACIÓN DE LA CIRCUNFERENCIA ================= -->
+
+            <!-- Pregunta 6 -->
+            <div class="tarjeta-cristal">
+                <h2>6. ¿Cuál es la ecuación ordinaria de una circunferencia con centro C(h, k)?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p6" value="A"> (x - h)² + (y - k)² = r²</label>
+                    <label class="opcion-label"><input type="radio" name="p6" value="B"> x² + y² = r</label>
+                    <label class="opcion-label"><input type="radio" name="p6" value="C"> (x + h)² + (y + k)² = r²</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 7 -->
+            <div class="tarjeta-cristal">
+                <h2>7. Si el centro de una circunferencia está en el origen (0,0), ¿cómo se reduce su ecuación?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p7" value="A"> x + y = r²</label>
+                    <label class="opcion-label"><input type="radio" name="p7" value="B"> x² - y² = r²</label>
+                    <label class="opcion-label"><input type="radio" name="p7" value="C"> x² + y² = r²</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 8 -->
+            <div class="tarjeta-cristal">
+                <h2>8. En la ecuación (x - 2)² + (y + 4)² = 9, ¿cuáles son las coordenadas del Centro C(h, k)?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p8" value="A"> C(-2, 4)</label>
+                    <label class="opcion-label"><input type="radio" name="p8" value="B"> C(2, -4)</label>
+                    <label class="opcion-label"><input type="radio" name="p8" value="C"> C(2, 4)</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 9 -->
+            <div class="tarjeta-cristal">
+                <h2>9. Utilizando la ecuación anterior, ¿cuánto mide el Radio (r) de la circunferencia?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p9" value="A"> 9</label>
+                    <label class="opcion-label"><input type="radio" name="p9" value="B"> 4.5</label>
+                    <label class="opcion-label"><input type="radio" name="p9" value="C"> 3</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 10 -->
+            <div class="tarjeta-cristal">
+                <h2>10. ¿Cuál es el término final al que se iguala la forma general: x² + y² + Dx + Ey + F = ?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p10" value="A"> r²</label>
+                    <label class="opcion-label"><input type="radio" name="p10" value="B"> 0</label>
+                    <label class="opcion-label"><input type="radio" name="p10" value="C"> 1</label>
+                </div>
+            </div>
+            <!-- ================= TEMA 3: DISTANCIAS ================= -->
+
+            <!-- Pregunta 11 -->
+            <div class="tarjeta-cristal">
+                <h2>11. ¿En qué famoso teorema geométrico se basa la fórmula de distancia entre dos puntos?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p11" value="A"> Teorema de Tales</label>
+                    <label class="opcion-label"><input type="radio" name="p11" value="B"> Teorema de Pitágoras</label>
+                    <label class="opcion-label"><input type="radio" name="p11" value="C"> Teorema de Euclides</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 12 -->
+            <div class="tarjeta-cristal">
+                <h2>12. ¿Cuál es la fórmula correcta para calcular la distancia entre los puntos A y B?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p12" value="A"> d = √((x₂ - x₁)² + (y₂ - y₁)²)</label>
+                    <label class="opcion-label"><input type="radio" name="p12" value="B"> d = (x₂ - x₁)² + (y₂ - y₁)²</label>
+                    <label class="opcion-label"><input type="radio" name="p12" value="C"> d = √((x₂ + x₁)² - (y₂ + y₁)²)</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 13 -->
+            <div class="tarjeta-cristal">
+                <h2>13. ¿Cuál es la distancia entre los puntos A(0,0) y B(3,4)?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p13" value="A"> 7</label>
+                    <label class="opcion-label"><input type="radio" name="p13" value="B"> 5</label>
+                    <label class="opcion-label"><input type="radio" name="p13" value="C"> 25</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 14 -->
+            <div class="tarjeta-cristal">
+                <h2>14. Al calcular la distancia de un punto a una recta, ¿cómo debe ser la trayectoria trazada?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p14" value="A"> Paralela a la recta</label>
+                    <label class="opcion-label"><input type="radio" name="p14" value="B"> Oblicua o inclinada</label>
+                    <label class="opcion-label"><input type="radio" name="p14" value="C"> Perpendicular a la recta (formando 90°)</label>
+                </div>
+            </div>
+
+            <!-- Pregunta 15 -->
+            <div class="tarjeta-cristal">
+                <h2>15. ¿Por qué se usan barras de valor absoluto | | en el numerador de la distancia punto-recta?</h2>
+                <div class="opciones-container">
+                    <label class="opcion-label"><input type="radio" name="p15" value="A"> Para asegurar que la distancia calculada siempre sea positiva</label>
+                    <label class="opcion-label"><input type="radio" name="p15" value="B"> Para elevar el resultado al cuadrado automáticamente</label>
+                    <label class="opcion-label"><input type="radio" name="p15" value="C"> Para indicar que es un número imaginario</label>
+                </div>
+            </div>
+
+            <!-- Botón para finalizar -->
+            <button type="submit" class="btn-enviar-quiz"><i class="fa-solid fa-square-check"></i> Finalizar y Evaluar Cuestionario</button>
+
+        </form>
+    </div>
+
+    <!-- SCRIPT DE INTERACCIÓN Y CÓMPUTO DE CALIFICACIÓN -->
+    <script>
+        function evaluarCuestionario(event) {
+            event.preventDefault(); // Detiene la recarga automática de la página
+
+            // Diccionario con la plantilla de respuestas correctas
+            const respuestasCorrectas = {
+                p1: "B", p2: "A", p3: "C", p4: "A", p5: "B",
+                p6: "A", p7: "C", p8: "B", p9: "C", p10: "B",
+                p11: "B", p12: "A", p13: "B", p14: "C", p15: "A"
+            };
+
+            let aciertos = 0;
+            const totalPreguntas = 15;
+            const formulario = document.getElementById('quiz-form');
+
+            // Recorrer y evaluar de forma dinámica cada radio seleccionado
+            for (let i = 1; i <= totalPreguntas; i++) {
+                const pregunta = formulario['p' + i];
+                if (pregunta && pregunta.value === respuestasCorrectas['p' + i]) {
+                    aciertos++;
+                }
+            }
+
+            // Mapeo matemático simple de la nota final en escala a 10.0
+            const calificacion = ((aciertos / totalPreguntas) * 10).toFixed(1);
+
+            // Caja de notificación en navegador para retroalimentación
+            alert(`📝 EVALUACIÓN FINALIZADA\n\n• Aciertos: ${aciertos} de ${totalPreguntas}\n• Calificación Obtenida: ${calificacion} / 10.0`);
+        }
+    </script>
+
+</body>
+</html>

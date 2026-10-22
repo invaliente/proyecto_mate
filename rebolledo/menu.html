@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Matemáticas</title>
+    <style>
+        /* --- ESTILOS GENERALES Y FONDO --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow-x: hidden; /* Evita scrolls horizontales accidentales */
+        }
+
+        /* Contenedor principal */
+        .contenedor-menu {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 160px 20px 40px 20px; /* Margen superior para no tapar el título fijo */
+        }
+
+        /* Capa 1: Tu imagen de fondo difuminada */
+        .contenedor-menu::before {
+            content: "";
+            position: fixed; /* Se queda quieto si la pantalla llegase a necesitar scroll */
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            background-image: url('images/menu fondo.jpg'); 
+            background-size: cover;
+            background-position: center;
+            filter: blur(12px);
+            z-index: -2;
+        }
+
+        /* Capa 2: Filtro azul sutil */
+        .contenedor-menu::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(29, 185, 224, 0.2), rgba(58, 134, 255, 0.25));
+            z-index: -1;
+        }
+
+        /* --- ENCABEZADO (LÍNEA SUPERIOR) --- */
+        .encabezado-linea {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-image: url('images/encabezado.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        /* TÍTULO FIJO SOBRE TODO */
+        .titulo-principal {
+            position: fixed;
+            top: 80px; 
+            left: 0;
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+            z-index: 999;
+        }
+
+        /* --- REJILLA ESTRUCTURAL CONFIGURADA --- */
+        .rejilla-temas {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columnas iguales por defecto */
+            gap: 25px; 
+            width: 100%;
+            max-width: 850px; 
+            box-sizing: border-box;
+        }
+
+        /* --- CUADROS ESTILO CRISTAL BLANCO (GLASSMORPHISM) --- */
+        .tarjeta-tema {
+            background-color: rgba(255, 255, 255, 0.15); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: left; 
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            border-left: 5px solid #1DB9E0; /* Línea de color azul base */
+        }
+
+        /* Animaciones hover */
+        .tarjeta-tema:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 20px 35px rgba(29, 185, 224, 0.25);
+            border-left-color: #2ec4ea;
+        }
+        .tarjeta-tema:active { transform: translateY(-1px); }
+
+        /* 🌟 NUEVO: Color especial morado para el cuadro del Cuestionario */
+        .tarjeta-cuestionario {
+            border-left-color: #D4AFED; 
+        }
+        .tarjeta-cuestionario:hover {
+            box-shadow: 0 20px 35px rgba(212, 175, 237, 0.25);
+            border-left-color: #e5cbff;
+        }
+
+        /* 🌟 MODIFICACIÓN: Estilo para expandir el div de Créditos en la tercera fila */
+        .tarjeta-creditos {
+            grid-column: span 2; /* 👈 Obliga al cuadro a ocupar las 2 columnas en su fila */
+            border-left-color: #3a86ff;
+        }
+        .tarjeta-creditos:hover {
+            box-shadow: 0 20px 35px rgba(58, 134, 255, 0.25);
+            border-left-color: #5496ff;
+        }
+
+        /* ELEMENTOS DE TEXTO INTERNOS */
+        .tarjeta-tema h2 {
+            margin: 0 0 8px 0;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .tarjeta-tema p {
+            margin: 0;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85); 
+            line-height: 1.4;
+            font-style: italic; 
+        }
+
+        /* Ajuste para celulares o pantallas pequeñas (Se ponen uno abajo del otro) */
+        @media (max-width: 650px) {
+            .rejilla-temas { grid-template-columns: 1fr; gap: 15px; }
+            .tarjeta-creditos { grid-column: span 1; }
+            .contenedor-menu { padding-top: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado fijo arriba -->
+    <div class="encabezado-linea"></div>
+
+    <!-- Título principal independiente -->
+    <h1 class="titulo-principal">Temario de Matemáticas</h1>
+
+    <!-- Contenedor principal -->
+    <div class="contenedor-menu">
+        
+        <!-- Rejilla que distribuye los bloques (2 arriba, 2 en medio, 1 abajo expandido) -->
+        <div class="rejilla-temas">
+            
+            <!-- --- PRIMERA FILA --- -->
+            <!-- Cuadro 1 -->
+            <div class="tarjeta-tema" onclick="navegarA('tema1.html')">
+                <h2>1. Ecuación de la Recta</h2>
+                <p>Explora cómo definir y graficar líneas en el plano cartesiano mediante sus coordenadas y pendientes.</p>
+            </div>
+
+            <!-- Cuadro 2 -->
+            <div class="tarjeta-tema" onclick="navegarA('tema2.html')">
+                <h2>2. Ecuación de la Circunferencia</h2>
+                <p>Estudia el comportamiento de los puntos que equidistan de un centro fijo y sus aplicaciones prácticas.</p>
+            </div>
+
+            <!-- --- SEGUNDA FILA --- -->
+            <!-- Cuadro 3 -->
+            <div class="tarjeta-tema" onclick="navegarA('tema3.html')">
+                <h2>3. Distancias</h2>
+                <p>Aprende las fórmulas matemáticas esenciales para calcular la separación exacta entre puntos y rectas.</p>
+            </div>
+
+            <!-- 🌟 NUEVO: Cuadro 4 (Cuestionario) -->
+            <div class="tarjeta-tema tarjeta-cuestionario" onclick="navegarA('cuestionario.html')">
+                <h2>4. Cuestionario Final</h2>
+                <p>Pon a prueba tus conocimientos adquiridos en los tres temas de geometría analítica con esta evaluación.</p>
+            </div>
+
+            <!-- --- TERCERA FILA --- -->
+            <!-- Cuadro 5 (Créditos - Expandido) -->
+            <div class="tarjeta-tema tarjeta-creditos" onclick="navegarA('creditos.html')">
+                <h2>5. Créditos</h2>
+                <p>Conoce los detalles de autoría, herramientas utilizadas y recursos que hicieron posible este proyecto web.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SCRIPT PARA NAVEGACIÓN -->
+    <script>
+        function navegarA(destino) {
+            window.location.href = destino;
+        }
+    </script>
+
+</body>
+</html>

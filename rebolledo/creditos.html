@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créditos - Matemáticas</title>
+    <!-- Cargamos Font Awesome para los iconos de autoría y herramientas -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        /* --- ESTILOS GENERALES Y FONDO REUTILIZADOS --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: white;
+        }
+
+        .contenedor-pagina {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 160px 20px 40px 20px;
+        }
+
+        /* Capa 1: Imagen de fondo difuminada */
+        .contenedor-pagina::before {
+            content: "";
+            position: fixed; 
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('images/menu fondo.jpg'); 
+            background-size: cover;
+            background-position: center;
+            filter: blur(12px);
+            z-index: -2;
+        }
+
+        /* Capa 2: Filtro azul unificador */
+        .contenedor-pagina::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(29, 185, 224, 0.2), rgba(58, 134, 255, 0.25));
+            z-index: -1;
+        }
+
+        /* --- ENCABEZADO SUPERIOR FIJO --- */
+        .encabezado-linea {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 60px;
+            background-image: url('images/encabezado.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        /* TÍTULO DEL TEMA */
+        .titulo-tema {
+            width: 100%;
+            text-align: center; 
+            margin: 0 0 30px 0;
+            font-size: 36px; 
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        /* --- BOTÓN VOLVER --- */
+        .btn-volver {
+            position: fixed;
+            top: 85px; left: 20px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 1001;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-volver:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(-3px);
+        }
+
+        /* --- CONTENEDOR DE LAS TARJETAS --- */
+        .seccion-contenido {
+            width: 100%;
+            max-width: 850px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Tarjeta base estilo Glassmorphism idéntica a tus temas */
+        .tarjeta-cristal {
+            background-color: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 6px solid #3a86ff; /* Borde azul para diferenciar créditos */
+        }
+
+        .tarjeta-cristal h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 10px;
+        }
+
+        .tarjeta-cristal p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0 0 10px 0;
+        }
+
+        /* Estilo para las listas de herramientas */
+        .lista-herramientas {
+            margin: 15px 0 0 0;
+            padding-left: 20px;
+            list-style: none;
+        }
+
+        .lista-herramientas li {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .lista-herramientas li i {
+            color: #3a86ff;
+            font-size: 14px;
+        }
+
+        /* Ajustes de pantalla móvil */
+        @media (max-width: 768px) {
+            .btn-volver { position: absolute; top: 75px; left: 50%; transform: translateX(-50%); }
+            .contenedor-pagina { padding-top: 190px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado superior fijo en imagen -->
+    <div class="encabezado-linea"></div>
+
+    <!-- Botón flotante para regresar de forma segura al menú -->
+    <a href="menu.html" class="btn-volver"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</a>
+
+    <!-- Bloque contenedor flexible -->
+    <div class="contenedor-pagina">
+        
+        <h1 class="titulo-tema">Créditos del Proyecto</h1>
+
+        <div class="seccion-contenido">
+            
+            <!-- TARJETA 1: AUTORÍA -->
+            <div class="tarjeta-cristal">
+                <h2><i class="fa-solid fa-user-graduate"></i> Autoría y Desarrollo</h2>
+                <p>Este sistema web educativo fue diseñado, estructurado y programado como una herramienta interactiva para el aprendizaje colaborativo de la geometría analítica.</p>
+                <p><strong>Desarrollador:</strong> @Brandon Ryan Zea Martinez</p>
+                <p><strong>Propósito:</strong> Facilitar la comprensión paso a paso de conceptos matemáticos fundamentales, permitiendo la creación de una comunidad de estudio donde los estudiantes puedan compartir sus propios ejercicios resueltos.</p>
+            </div>
+
+            <!-- TARJETA 2: TECNOLOGÍAS UTILIZADAS -->
+            <div class="tarjeta-cristal">
+                <h2><i class="fa-solid fa-code"></i> Tecnologías y Herramientas</h2>
+                <p>Para la construcción completa de esta plataforma web se emplearon tecnologías estándar de la industria del desarrollo de software:</p>
+                
+                <ul class="lista-herramientas">
+                    <li><i class="fa-solid fa-layer-group"></i> <strong>HTML5 & CSS3:</strong> Arquitectura estructural y diseño responsivo basado en interfaces translúcidas (Glassmorphism).</li>
+                    <li><i class="fa-solid fa-brands fa-js"></i> <strong>JavaScript (ES6):</strong> Control dinámico de las ventanas modales, lógica de los ojos de las contraseñas, evaluación interactiva del quiz y conexiones asíncronas vía Fetch API.</li>
+                    <li><i class="fa-solid fa-brands fa-php"></i> <strong>PHP 8:</strong> Procesamiento seguro del backend, validación de sesiones activas, encriptación Bcrypt para contraseñas y gestión de subida de archivos multimedia.</li>
+                    <li><i class="fa-solid fa-database"></i> <strong>MySQL:</strong> Almacenamiento e indexación relacional de los usuarios registrados y el registro de imágenes compartidas por la comunidad.</li>
+                    <li><i class="fa-solid fa-server"></i> <strong>XAMPP (Apache Server):</strong> Entorno de servidor local integrado y gestión de base de datos a través de phpMyAdmin.</li>
+                    <li><i class="fa-solid fa-robot"></i> <strong>Inteligencia Artificial (IA):</strong> Utilizada como soporte técnico avanzado para comprender nuevas etiquetas HTML, estructurar la lógica de bases de datos y agilizar la identificación y corrección de errores de código.</li>
+                </ul>
+            </div>
+
+            <!-- TARJETA 3: RECURSOS COMPARTIDOS -->
+            <div class="tarjeta-cristal">
+                <h2><i class="fa-solid fa-handshake-angle"></i> Agradecimientos y Recursos</h2>
+                <p>Queremos extender un agradecimiento especial a los recursos gráficos y librerías de código abierto que le dieron una estética moderna y funcional a la aplicación:</p>
+                <p>• <strong>Font Awesome:</strong> Por la biblioteca de iconos vectoriales utilizada en los botones, campos de texto y menús interactivos.</p>
+                <p>• <strong>Google Fonts:</strong> Por las tipografías limpias y de alta legibilidad que facilitan el estudio teórico de las matemáticas.</p>
+                <p>• <strong>Comunidad de Estudiantes:</strong> A cada compañero que aporta capturas de sus cuadernos y ejercicios, haciendo que este temario crezca día con día.</p>
+            </div>
+
+        </div>
+        <div style="text-align: center; margin-top: 25px;">
+            <img src="images/agredecimientos.png" alt="Agradecimientos Finales" style="max-width: 100%; height: auto; border-radius: 16px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255, 255, 0.1)">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

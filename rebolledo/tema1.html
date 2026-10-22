@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1. Ecuación de la Recta - Matemáticas</title>
+    <!-- Cargamos Font Awesome para iconos de navegación y carga de archivos -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        /* --- ESTILOS GENERALES Y FONDO --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: white;
+        }
+
+        /* Contenedor principal con scroll permitido para leer el contenido largo */
+        .contenedor-pagina {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 160px 20px 40px 20px; /* Espacio para encabezado y título fijo */
+        }
+
+        /* Capa 1: Imagen de fondo difuminada compartida */
+        .contenedor-pagina::before {
+            content: "";
+            position: fixed; /* Fixed para que el fondo no se mueva con el scroll */
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            background-image: url('images/menu fondo.jpg'); 
+            background-size: cover;
+            background-position: center;
+            filter: blur(12px);
+            z-index: -2;
+        }
+
+        /* Capa 2: Filtro azul unificador */
+        .contenedor-pagina::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(29, 185, 224, 0.2), rgba(58, 134, 255, 0.25));
+            z-index: -1;
+        }
+
+        /* --- ENCABEZADO (LÍNEA SUPERIOR) --- */
+        .encabezado-linea {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 60px;
+            background-image: url('images/encabezado.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        /* TÍTULO FIJO DEL TEMA */
+        .titulo-tema {
+            width: 100%;
+            text-align: center; 
+            margin: 0 0 30px 0; /* Espaciado debajo del título */
+            font-size: 36px; 
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        /* --- BOTÓN VOLVER --- */
+        .btn-volver {
+            position: fixed;
+            top: 85px; left: 20px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 1001;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-volver:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(-3px);
+        }
+
+        /* --- ESTRUCTURA DE CONTENIDO (BLOQUES DE CRISTAL) --- */
+        .seccion-contenido {
+            width: 100%;
+            max-width: 850px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Tarjeta base estilo Glassmorphism */
+        .tarjeta-cristal {
+            background-color: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 6px solid #1DB9E0; /* Línea de color a la izquierda */
+        }
+
+        .tarjeta-cristal h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tarjeta-cristal p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0 0 15px 0;
+        }
+
+        /* Cajas de fórmulas resaltadas */
+        .caja-formula {
+            background-color: rgba(15, 23, 42, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1DB9E0;
+            margin: 20px 0;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 10px rgba(29, 185, 224, 0.3);
+        }
+
+        /* Lista ordenada de pasos */
+        .lista-pasos {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .lista-pasos li {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .lista-pasos strong {
+            color: #1DB9E0;
+        }
+
+        /* --- DISEÑO DE LA ZONA DE SUBIDA DE IMÁGENES --- */
+        .zona-subida {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        .zona-subida:hover {
+            border-color: #1DB9E0;
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        .zona-subida i {
+            font-size: 40px;
+            color: #1DB9E0;
+            margin-bottom: 10px;
+        }
+        
+        .input-oculto {
+            display: none;
+        }
+
+        .btn-subir {
+            background: linear-gradient(135deg, #1DB9E0, #159ec0);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+        .btn-subir:hover { transform: translateY(-2px); }
+
+        /* Ajustes responsivos */
+        @media (max-width: 768px) {
+            .btn-volver { position: absolute; top: 75px; left: 50%; transform: translateX(-50%); }
+            .btn-volver:hover { transform: translateX(-50%) scale(1.05); }
+            .contenedor-pagina { padding-top: 190px; }
+            .titulo-tema { top: 130px; font-size: 26px; }
+        }
+                /* --- ESTILOS DE LA GALERÍA DE EJEMPLOS --- */
+        .btn-mostrar-galeria {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn-mostrar-galeria:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: #1DB9E0;
+            transform: translateY(-2px);
+        }
+
+        .contenedor-galeria-oculta {
+            display: none; /* Oculto por defecto */
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(15, 23, 42, 0.3);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tarjeta-ejemplo-subido {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 14px;
+            border-left: 4px solid #1DB9E0;
+        }
+
+        .usuario-autor {
+            margin: 0 0 10px 0;
+            font-weight: bold;
+            color: #1DB9E0;
+            font-size: 15px;
+        }
+
+        .img-ejemplo-galeria {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: zoom-in;
+            transition: transform 0.2s;
+        }
+        .img-ejemplo-galeria:hover {
+            transform: scale(1.01);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado superior fijo en imagen -->
+    <div class="encabezado-linea"></div>
+
+    <!-- Botón flotante para regresar de forma segura al menú -->
+    <a href="menu.html" class="btn-volver"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</a>
+
+    <!-- Bloque contenedor flexible -->
+    <div class="contenedor-pagina">
+        <h1 class="titulo-tema">Ecuación de la Recta</h1>
+        <div class="seccion-contenido">
+            
+            <!-- TARJETA 1: INTRODUCCIÓN Y CONCEPTO -->
+            <div class="tarjeta-cristal">
+                <h2><i class="fa-solid fa-graduation-cap"></i> ¿Qué es la Ecuación de la Recta?</h2>
+                <p>En geometría analítica, la <strong>ecuación de la recta</strong> es la expresión algebraica que describe a la perfección el comportamiento y la trayectoria de una línea infinita en un plano bidimensional cartesiano (X, Y).</p>
+                <p>Cada línea cuenta con una inclinación particular respecto al eje horizontal, a la cual denominamos algebraicamente como <strong>Pendiente (m)</strong>. La pendiente define qué tan rápido sube o baja la línea a medida que nos desplazamos de izquierda a derecha.</p>
+                <p>La forma más común y utilizada en las matemáticas para representar esta propiedad es la <strong>Ecuación Pendiente-Ordenada al Origen</strong>:</p>
+                
+                <div class="caja-formula">y = mx + b</div>
+                
+                <p>Donde <strong>m</strong> representa el valor numérico de la pendiente, y <strong>b</strong> corresponde a la intersección con el eje Y (el punto exacto donde la línea cruza la vertical).</p>
+            </div>
+
+            <!-- TARJETA 2: OBTENCIÓN PASO A PASO -->
+            <div class="tarjeta-cristal">
+                <h2><i class="fa-solid fa-list-ol"></i> Cómo obtener la ecuación paso a paso</h2>
+                <p>El escenario más común ocurre cuando conocemos las coordenadas de dos puntos específicos por los que cruza la línea: el Punto 1 A(x₁, y₁) y el Punto 2 B(x₂, y₂). Para deducir la fórmula, sigue esta secuencia matemática:</p>
+                
+                <ol class="lista-pasos">
+                    <li>
+                        <strong>Paso 1: Calcular la Pendiente (m)</strong><br>
+                        Aplica la fórmula del cociente de diferencias para evaluar el grado de inclinación existente entre ambos puntos fijos:
+                        <div class="caja-formula">m = (y₂ - y₁) / (x₂ - x₁)</div>
+                    </li>
+                    <li>
+                        <strong>Paso 2: Utilizar la forma Punto-Pendiente</strong><br>
+                        Selecciona las coordenadas de cualquiera de tus dos puntos iniciales (por ejemplo, el Punto 1) y sustitúyelas junto a la pendiente hallada en la siguiente igualdad estructural:
+                        <div class="caja-formula">y - y₁ = m(x - x₁)</div>
+                    </li>
+                    <li>
+                        <strong>Paso 3: Despejar y Simplificar</strong><br>
+                        Aplica la propiedad distributiva para multiplicar la pendiente (m) por el binomio de las variables agrupadas, rompe los paréntesis y despeja la variable vertical <strong>y</strong> para conseguir el formato final de la ecuación Pendiente-Ordenada al origen (\(y = mx + b\)).
+                    </li>
+                </ol>
+            </div>
+
+            <!-- TARJETA 3: FORMULARIO COLABORATIVO -->
+            <div class="tarjeta-cristal">
+                <h2><i class="fa-solid fa-images"></i> Ejemplos prácticos y Ejercicios</h2>
+                <p>¡Colabora con el grupo! Sube capturas de pantalla de tus libretas, esquemas digitales o ejercicios resueltos sobre la ecuación de la recta para que otros compañeros puedan repasar antes del cuestionario final.</p>
+                
+                <form action="subir_ejemplo.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="tema" value="1">
+                    <div class="zona-subida" onclick="document.getElementById('archivo-imagen').click()">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <p id="texto-subida">Haz clic aquí para seleccionar una imagen desde tu equipo</p>
+                        <input type="file" id="archivo-imagen" name="imagen_ejemplo" class="input-oculto" accept="image/*" required onchange="mostrarNombreArchivo()">
+                    </div>
+                    
+                    <div style="text-align: right;">
+                        <button type="submit" class="btn-subir"><i class="fa-solid fa-paper-plane"></i> Publicar Ejemplo</button>
+                    </div>
+                </form>
+                            <!-- 🌟 NUEVA SECCIÓN DE GALERÍA INTERACTIVA -->
+            <button class="btn-mostrar-galeria" onclick="alternarGaleria(1)">
+                <i class="fa-solid fa-images"></i> Mostrar ejemplos de la comunidad
+            </button>
+
+            <div id="galeria-tema-1" class="contenedor-galeria-oculta">
+                <!-- Aquí el PHP inyectará las imágenes dinámicamente -->
+            </div>
+
+            </div>
+
+        </div>
+<!-- 🎥 TARJETA DE VIDEO EXPLICATIVO (CORREGIDA) -->
+<div class="tarjeta-cristal" style="border-left-color: #1DB9E0;">
+<!-- 🎥 TARJETA DE VIDEO EXPLICATIVO (VERSIÓN BOTÓN CONECTADO) -->
+<div class="tarjeta-cristal" style="border-left-color: #1DB9E0; text-align: center; padding: 35px;">
+    <h2><i class="fa-solid fa-video"></i> Video Explicativo: Paso a Paso</h2>
+    <p style="text-align: left; margin-bottom: 25px;">Si te quedó alguna duda sobre cómo calcular la pendiente o estructurar la ecuación ordinaria, repasa visualmente con este tutorial detallado de MateFacil directamente en la plataforma:</p>
+    
+    <!-- Botón interactivo que salta la restricción de localhost -->
+    <a href="https://youtu.be" target="_blank" class="btn-subir" style="text-decoration: none; display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; font-size: 16px;">
+        <i class="fa-brands fa-youtube" style="font-size: 20px; color: #ff0000;"></i> Ver Video Tutorial en YouTube
+    </a>
+</div>
+
+    </div>
+
+    <!-- SCRIPT DE INTERACCIÓN -->
+    <script>
+        // Cambia dinámicamente el texto de la zona interactiva al seleccionar una foto
+        function mostrarNombreArchivo() {
+            const input = document.getElementById('archivo-imagen');
+            const texto = document.getElementById('texto-subida');
+            if (input.files.length > 0) {
+                texto.innerHTML = `<strong style="color: #1DB9E0;"><i class="fa-solid fa-file-image"></i> Archivo seleccionado:</strong> ${input.files[0].name}`;
+            }
+        }
+                function alternarGaleria(numeroTema) {
+            const contenedor = document.getElementById('galeria-tema-' + numeroTema);
+            // Buscamos el botón que activó la galería en base a su clase
+            const boton = document.querySelector('.btn-mostrar-galeria');
+            
+            if (contenedor.style.display === 'flex') {
+                contenedor.style.display = 'none';
+                // 🌟 NUEVO: Regresa el texto e icono original al ocultar la galería
+                boton.innerHTML = '<i class="fa-solid fa-images"></i> Mostrar ejemplos de la comunidad';
+            } else {
+                // Consultamos al PHP para traer los datos actualizados
+                fetch('obtener_ejemplos.php?tema=' + numeroTema)
+                    .then(response => response.text())
+                    .then(html => {
+                        contenedor.innerHTML = html;
+                        contenedor.style.display = 'flex';
+                        // 🌟 NUEVO: Cambia el texto e icono a "Ocultar" si la descarga es exitosa
+                        boton.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Ocultar ejemplos de la comunidad';
+                    })
+                    .catch(error => {
+                        console.error('Error al cargar la galería:', error);
+                        contenedor.innerHTML = '<p style="color:#ef4444; text-align:center; font-weight:bold;">No se pudo conectar con el servidor.</p>';
+                        contenedor.style.display = 'flex';
+                    });
+            }
+        }
+
+    </script>
+
+</body>
+</html>
